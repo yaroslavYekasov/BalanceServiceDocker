@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboardStyle.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Dashboard</h1>
+        
+        <section>
+            <h2 onclick="toggleSection('userInfo')" class="toggle-header">Your Information</h2>
+            <div id="userInfo" class="content">
+                <p><strong>Username:</strong> <span id="username">User</span></p>
+                <p><strong>Email:</strong> <span id="email">example@example.com</span></p>
+                <p><strong>Balance:</strong> <span id="balance">0 USD</span></p>
+            </div>
+        </section>
+
+        <section>
+            <h2 onclick="toggleSection('transactionHistory')" class="toggle-header">Transaction History</h2>
+                <div id="transactionHistory" class="content">
+                    <ul id="transactions"></ul>
+                </div>
+        </section>
+
+        <section>
+            <h2 onclick="toggleSection('transferFormSection')" class="toggle-header">Transfer Money</h2>
+            <div id="transferFormSection" class="content">
+                <form id="transferForm">
+                    <label for="recipientId">Recipient ID:</label>
+                    <input type="number" id="recipientId" required>
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" step="0.01" required>
+                    <button type="submit">Transfer</button>
+                </form>
+                <p id="transferMessage"><i>Response...</i></p>
+            </div>
+        </section>
+    </div>
+    <script src="dashboardScript.js"></script>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section.style.maxHeight) {
+                section.style.maxHeight = null; 
+                section.classList.remove('open');
+            } else {
+                section.style.maxHeight = section.scrollHeight + "px";
+                section.classList.add('open');
+            }
+        }
+    </script>
+</body>
+</html>

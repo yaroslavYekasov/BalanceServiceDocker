@@ -1,0 +1,41 @@
+services:
+  nginx:
+    image: nginx-static
+    container_name: compose-site
+    ports:
+      - "80:80"
+    networks:
+      - my-network
+
+  api:
+    image: nginx-api
+    container_name: composite-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - my-network
+
+  db:
+    image: mysql
+    container_name: composite-mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+
+  dns:
+    image: dns-server
+    container_name: compose-dns
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge

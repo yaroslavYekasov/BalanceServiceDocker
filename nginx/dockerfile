@@ -1,0 +1,6 @@
+FROM nginx:latest
+
+COPY balance-microservice.conf /etc/nginx/conf.d/
+COPY static/ /var/www/balance-microservice/
+
+RUN rm /etc/nginx/conf.d/default.conf
