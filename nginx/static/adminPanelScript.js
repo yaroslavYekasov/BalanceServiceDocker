@@ -1,4 +1,4 @@
-const baseUrl = "http://balance.denisenko.loc";
+const baseUrl = "http://web.balance.com";
 
 let editMode = false;
 let editUserId = null;

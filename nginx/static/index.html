@@ -3,232 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>API Documentation</title>
+    <title>Balance Microservice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        .result {
+            margin-top: 10px;
+            color: green;
+        }
+        .error {
+            margin-top: 10px;
+            color: red;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container my-5">
-        <h1>API Documentation</h1>
-        
-        <section>
-            <h2>Base URL</h2>
-            <p><code>http://ls2.denisenko.com</code></p>
-        </section>
+<body>
+    <h1>Balance Microservice</h1>
 
-        <section>
-            <h2 onclick="toggleSection('endpoints')" id="endpointsHeader">Endpoints</h2>
-            <div id="endpoints">
+    <!-- Fetch All Users -->
+    <form id="fetchUsersForm">
+        <h2>Fetch All Users</h2>
+        <button type="submit">Fetch Users</button>
+        <div class="result" id="fetchUsersResult"></div>
+    </form>
 
-            <div class="mb-4">
-                <h3>GET /users</h3>
-                <p>Retrieve a list of all users.</p>
-                <p><strong>Response:</strong></p>
-                <pre>
-[
-    {
-        "id": 1,
-        "username": "JohnDoe",
-        "email": "john.doe@example.com",
-        "balance": 100.00,
-        "currency": "USD"
-    },
-    ...
-]
-                </pre>
-            </div>
+    <!-- Create User -->
+    <form id="createUserForm">
+        <h2>Create User</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+        <label for="balance">Balance:</label>
+        <input type="number" id="balance" required>
+        <label for="currency">Currency:</label>
+        <select id="currency" required>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+        </select>
+        <button type="submit">Create User</button>
+        <div class="result" id="createUserResult"></div>
+    </form>
 
-            <div class="mb-4">
-                <h3>GET /users/:id</h3>
-                <p>Retrieve details of a specific user by ID.</p>
-                <p><strong>Response:</strong></p>
-                <pre>
-{
-    "id": 1,
-    "username": "JohnDoe",
-    "email": "john.doe@example.com",
-    "balance": 100.00,
-    "currency": "USD",
-    "transaction_history": [
-        {
-            "type": "Deposit",
-            "amount": 50,
-            "date": "2024-01-01T12:00:00Z"
-        }
-    ]
-}
-                </pre>
-            </div>
+    <!-- Deposit Money -->
+    <form id="depositForm">
+        <h2>Deposit Money</h2>
+        <label for="depositUserId">User ID:</label>
+        <input type="number" id="depositUserId" required>
+        <label for="depositAmount">Amount:</label>
+        <input type="number" id="depositAmount" required>
+        <button type="submit">Deposit</button>
+        <div class="result" id="depositResult"></div>
+    </form>
 
-            <div class="mb-4">
-                <h3>POST /users</h3>
-                <p>Create a new user.</p>
-                <p><strong>Request Body:</strong></p>
-                <pre>
-{
-    "username": "JohnDoe",
-    "email": "john.doe@example.com",
-    "balance": 100.00,
-    "currency": "USD"
-}
-                </pre>
-                <p><strong>Response:</strong></p>
-                <pre>
-{
-    "id": 1,
-    "username": "JohnDoe",
-    "email": "john.doe@example.com",
-    "balance": 100.00,
-    "currency": "USD"
-}
-                </pre>
-            </div>
+    <!-- Withdraw Money -->
+    <form id="withdrawForm">
+        <h2>Withdraw Money</h2>
+        <label for="withdrawUserId">User ID:</label>
+        <input type="number" id="withdrawUserId" required>
+        <label for="withdrawAmount">Amount:</label>
+        <input type="number" id="withdrawAmount" required>
+        <button type="submit">Withdraw</button>
+        <div class="result" id="withdrawResult"></div>
+    </form>
 
-            <div class="mb-4">
-                <h3>DELETE /users/:id</h3>
-                <p>Delete a user by their ID.</p>
-                <p><strong>Response:</strong></p>
-                <pre>
-{
-    "message": "User deleted successfully."
-}
-                </pre>
-            </div>
-
-            <div class="mb-4">
-                <h3>GET /users/:id/balance</h3>
-                <p>Retrieve the balance of a specific user by their ID.</p>
-                <p><strong>Response:</strong></p>
-                <pre>
-"300 EUR"
-                </pre>
-            </div>
-            
-            <div class="mb-4">
-                <h3>GET /users/:id/transactions</h3>
-                <p>Retrieve the transaction history of a specific user by their ID.</p>
-                <p><strong>Response:</strong></p>
-                <pre>
-[
-    {
-        "type": "Deposit",
-        "amount": 50.00,
-        "date": "2024-01-01T12:00:00Z"
-    },
-    {
-        "type": "Withdrawal",
-        "amount": 20.00,
-        "date": "2024-01-02T15:00:00Z"
-    }
-]
-                </pre>
-            </div>
-
-            <div class="mb-4">
-                <h3>POST /users/:id/deposit</h3>
-                <p>Add funds to a user’s account. Supports deposits in different currencies with automatic conversion based on current exchange rates.</p>
-                <p><strong>Request Body:</strong></p>
-                <pre>
-{
-    "amount": 50.00,
-    "currency": "EUR"
-}
-                </pre>
-                <p><strong>Response:</strong></p>
-                <pre>
-{
-    "message": "Deposit successful",
-    "new_balance": 150.00
-}
-                </pre>
-            </div>
-
-            <div class="mb-4">
-                <h3>POST /users/:id/withdraw</h3>
-                <p>Withdraw funds from a user’s account. Handles currency conversion if specified in the request.</p>
-                <p><strong>Request Body:</strong></p>
-                <pre>
-{
-    "amount": 50.00,
-    "currency": "USD"
-}
-                </pre>
-                <p><strong>Response:</strong></p>
-                <pre>
-{
-    "message": "Withdrawal successful",
-    "new_balance": 250.00
-}
-                </pre>
-            </div>
-
-            <div class="mb-4">
-                <h3>POST /users/:id/transfer</h3>
-                <p>Transfer funds between users with automatic currency conversion.</p>
-                <p><strong>Request Body:</strong></p>
-                <pre>
-{
-    "recipient_id": 2,
-    "amount": 100.00
-}
-                </pre>
-                <p><strong>Response:</strong></p>
-                <pre>
-{
-    "message": "Transfer successful",
-    "sender_new_balance": 300.00,
-    "recipient_new_balance": 650.00
-}
-                </pre>
-            </div>
-            </div>
-        </section>
-
-        <section>
-            <h2 onclick="toggleSection('dashboard')" id="dashboardHeader">Dashboard</h2>
-            <div id="dashboard" class="mb-4">
-                <h3>Dashboard Features</h3>
-                <p>The Dashboard provides an overview of the user's information and allows for the following actions:</p>
-                <ul>
-                    <li><strong>View User Information:</strong> Displays the username, email, and account balance.</li>
-                    <li><strong>Transaction History:</strong> Lists all transactions related to the user, including deposits, withdrawals, and transfers.</li>
-                    <li><strong>Transfer Money:</strong> Allows users to transfer money to other users by specifying the recipient ID and amount.</li>
-                </ul>
-                <p><strong>Access URL:</strong></p>
-                <pre>http://ls2.denisenko.com/dashboard</pre>
-                <p><strong>Example Query:</strong> User ID is passed as a URL parameter, e.g., <code>?id=1</code>.</p>
-            </div>
-        </section>
-        
-        <section>
-            <h2 onclick="toggleSection('adminPanel')" id="adminPanelHeader">Admin Panel</h2>
-            <div id="adminPanel" class="mb-4">
-                <h3>Admin Panel Features</h3>
-                <p>The Admin Panel allows administrators to manage user accounts and perform the following operations:</p>
-                <ul>
-                    <li><strong>View All Users:</strong> Displays a list of all registered users in a table format.</li>
-                    <li><strong>Add a User:</strong> Includes a form to add new users with details like username, email, balance, and currency.</li>
-                    <li><strong>Edit a User:</strong> Allows administrators to update user information directly within the interface.</li>
-                    <li><strong>Delete a User:</strong> Provides a quick option to remove users from the database.</li>
-                </ul>
-                <p><strong>Access URL:</strong></p>
-                <pre>http://ls2.denisenko.com/admin</pre>
-                <p><strong>Example Usage:</strong> The admin panel provides an interactive interface for managing the database in real-time.</p>
-            </div>
-        </section>
-        
-    </div>
+    <!-- JavaScript for Handling API Requests -->
     <script>
-        function toggleSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section.style.maxHeight) {
-                section.style.maxHeight = null; 
-            } else {
-                section.style.maxHeight = section.scrollHeight + "px";
+        const apiUrl = '/users';
+
+        // Fetch All Users
+        document.getElementById('fetchUsersForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const resultDiv = document.getElementById('fetchUsersResult');
+            resultDiv.textContent = '';
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
             }
-        }
+        });
+
+        // Create User
+        document.getElementById('createUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const balance = document.getElementById('balance').value;
+            const currency = document.getElementById('currency').value;
+            const resultDiv = document.getElementById('createUserResult');
+            resultDiv.textContent = '';
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, balance, currency }),
+                });
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+            }
+        });
+
+        // Deposit Money
+        document.getElementById('depositForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('depositUserId').value;
+            const amount = document.getElementById('depositAmount').value;
+            const resultDiv = document.getElementById('depositResult');
+            resultDiv.textContent = '';
+            try {
+                const response = await fetch(`${apiUrl}/${userId}/deposit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount }),
+                });
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+            }
+        });
+
+        // Withdraw Money
+        document.getElementById('withdrawForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('withdrawUserId').value;
+            const amount = document.getElementById('withdrawAmount').value;
+            const resultDiv = document.getElementById('withdrawResult');
+            resultDiv.textContent = '';
+            try {
+                const response = await fetch(`${apiUrl}/${userId}/withdraw`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount }),
+                });
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+            }
+        });
     </script>
 </body>
-<footer class="mt-5">
-    <p>API Documentation for <strong>ls2.denisenko.com</strong></p>
-</footer>
 </html>

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get("id");
-    const baseUrl = "http://balance.denisenko.loc";
+    const baseUrl = "http://web.balance.com";
 
     if (!userId) {
         document.body.innerHTML = "<h1>User ID not provided in the URL.</h1>";
