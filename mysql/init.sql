@@ -2,8 +2,8 @@ CREATE DATABASE IF NOT EXISTS express_db;
 
 USE express_db;
 
-CREATE USER IF NOT EXISTS 'express_user'@'%' IDENTIFIED BY '1234';
-GRANT ALL PRIVILEGES ON express_db.* TO 'express_user'@'%';
+CREATE USER IF NOT EXISTS 'balance_user'@'%' IDENTIFIED BY '123';
+GRANT ALL PRIVILEGES ON express_db.* TO 'balance_user'@'%';
 FLUSH PRIVILEGES;
 
 CREATE TABLE IF NOT EXISTS transactions (

@@ -9,8 +9,8 @@ const db = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0,
     host: "composite-mysql",
-    user: 'express_user',
-    password: '1234',
+    user: 'balance_user',
+    password: '123',
     database: 'express_db'
 });
 /*
